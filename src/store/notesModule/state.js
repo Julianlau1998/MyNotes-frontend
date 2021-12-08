@@ -10,7 +10,7 @@ export default {
   },
   err: null,
   //localhost: '/api/'
-  localhost: 'https://mynotes-service-f7xxtlrmbq-ez.a.run.app/api/',
+  localhost: 'https://api.app-mynotes.com/api/',
   // localhost: 'https://mynotes-backend-f7xxtlrmbq-ey.a.run.app/api/'
   // localhost: 'http://139.162.158.148:1323/api/'
   // localhost: 'http://192.168.178.58:1323/api/'
