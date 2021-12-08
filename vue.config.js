@@ -14,6 +14,7 @@ module.exports = {
       exclude: [/\.map$/, /_redirects/],
     }
   },
+  
   devServer: {
     host: '0.0.0.0',
     disableHostCheck: true,
