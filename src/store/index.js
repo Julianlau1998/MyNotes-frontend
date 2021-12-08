@@ -17,7 +17,7 @@ export default new Vuex.Store({
     currentFolder: '',
     dragging: false,
     //localhost: 'https://api.app-mynotes.com/api/',
-    localhost: 'https://mynotes-frontend-f7xxtlrmbq-ez.a.run.app/api/',
+    localhost: 'https://mynotes-service-f7xxtlrmbq-ez.a.run.app/api/',
     //localhost: '/api/',
     folder: ''
   },
