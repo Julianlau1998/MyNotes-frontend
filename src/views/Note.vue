@@ -80,7 +80,7 @@ import router from '../router'
 import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
 import { mapState } from 'vuex' 
-
+import axios from 'axios'
 
 extend('required', {
   ...required,
@@ -143,7 +143,15 @@ export default {
     },
     created () {
         const payload = {'id': this.id}
-        this.$store.dispatch('notesModule/getOne', payload)
+        if( axios.defaults.headers.common['authorization'] === undefined) {
+            this.$auth.getTokenSilently()
+            .then((token) => {
+                this.$store.dispatch('setAuthHeader', token)
+                this.$store.dispatch('notesModule/getOne', payload)
+            })
+        } else {
+            this.$store.dispatch('notesModule/getOne', payload)
+        }
         
         document.getElementById('body').style.overflow = 'hidden'
         if(navigator.share !== undefined) {

@@ -82,6 +82,7 @@ import Vue from 'vue'
 import Vue2TouchEvents from 'vue2-touch-events'
 import { mapState } from 'vuex' 
 import NewFolder from './NewFolder.vue'
+import axios from 'axios'
 
 Vue.use(Vue2TouchEvents)
 
@@ -99,8 +100,17 @@ export default {
         }
     },
     created () {
-        this.$store.dispatch('listsModule/getAll')
-        this.$store.dispatch('foldersModule/getAll')
+        if( axios.defaults.headers.common['authorization'] === undefined) {
+            this.$auth.getTokenSilently()
+            .then((token) => {
+                this.$store.dispatch('setAuthHeader', token)
+                this.$store.dispatch('listsModule/getAll')
+                this.$store.dispatch('foldersModule/getAll')
+            })
+        } else {
+            this.$store.dispatch('listsModule/getAll')
+            this.$store.dispatch('foldersModule/getAll')
+        }
 
         localStorage.setItem('currentComponent', 'Notes')
     },

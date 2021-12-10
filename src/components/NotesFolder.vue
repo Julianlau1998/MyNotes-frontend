@@ -35,6 +35,7 @@
 
 <script>
 import { mapState } from 'vuex' 
+import axios from 'axios'
 
 export default {
     name: 'NotesFolder',
@@ -44,10 +45,21 @@ export default {
         }
     },
     created () {
-        let payload = {'userID': this.$auth.user.sub, 'folderID': this.id}
-        this.$store.dispatch('notesModule/getByCategory', payload)
-        payload = {'userID': this.$auth.user.sub, 'id': this.id}
-        this.$store.dispatch('foldersModule/getOne', payload)
+        if( axios.defaults.headers.common['authorization'] === undefined) {
+            this.$auth.getTokenSilently()
+            .then((token) => {
+                this.$store.dispatch('setAuthHeader', token)
+                let payload = {'userID': this.$auth.user.sub, 'folderID': this.id}
+                this.$store.dispatch('notesModule/getByCategory', payload)
+                payload = {'userID': this.$auth.user.sub, 'id': this.id}
+                this.$store.dispatch('foldersModule/getOne', payload)
+            })
+        } else {
+            let payload = {'userID': this.$auth.user.sub, 'folderID': this.id}
+            this.$store.dispatch('notesModule/getByCategory', payload)
+            payload = {'userID': this.$auth.user.sub, 'id': this.id}
+            this.$store.dispatch('foldersModule/getOne', payload)
+        }
     },
     computed: {
     ...mapState(['notesModule']),

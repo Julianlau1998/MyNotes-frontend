@@ -156,7 +156,7 @@ import { ValidationProvider, ValidationObserver, extend } from 'vee-validate';
 import { required } from 'vee-validate/dist/rules';
 import draggable from 'vuedraggable'
 import { mapState } from 'vuex' 
-
+import axios from 'axios'
 
 extend('required', {
   ...required,
@@ -202,9 +202,17 @@ export default {
     },
     created () {
         const payload = {'id': this.id}
-        this.$store.dispatch('listsModule/getOne', payload)
-        this.lists = this.listsList
+        if( axios.defaults.headers.common['authorization'] === undefined) {
+            this.$auth.getTokenSilently()
+            .then((token) => {
+                this.$store.dispatch('setAuthHeader', token)
+                this.$store.dispatch('listsModule/getOne', payload)
+            })
+        } else {
+            this.$store.dispatch('listsModule/getOne', payload)
+        }
 
+        this.lists = this.listsList
         if(navigator.share !== undefined) {
             this.shareAvailable = true
         }

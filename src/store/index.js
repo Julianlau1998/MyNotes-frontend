@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import notesModule from './notesModule'
 import listsModule from './listsModule'
 import foldersModule from './foldersModule'
+import axios from 'axios'
 
 
 Vue.use(Vuex)
@@ -23,6 +24,9 @@ export default new Vuex.Store({
   mutations: {
   },
   actions: {
+    setAuthHeader(commit, token) {
+      axios.defaults.headers.common['authorization'] = `bearer ${token}`
+    }
   },
   modules: {
     notesModule,

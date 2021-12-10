@@ -1,8 +1,5 @@
 import axios from 'axios'
 
-const token = sessionStorage.getItem('token')
-axios.defaults.headers.common['authorization'] = token
-
 export function getAll ({ commit, state }) {
   commit('GET_LISTS')
   axios

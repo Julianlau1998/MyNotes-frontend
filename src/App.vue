@@ -10,19 +10,13 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data () {
     return {
     }
   },
-  async created() {
-    setInterval(() => {
-      this.$auth.getTokenSilently()
-      .then((token) => {
-         sessionStorage.setItem('token', `bearer ${token}`)
-      })
-    }, 3600)
-
+  mounted() {
     if (this.$workbox) {
       this.$workbox.addEventListener("waiting", () => {
         this.showUpgradeUI = true;
@@ -40,10 +34,38 @@ export default {
     }
   },
   computed: {
+    authenticated () {
+      if (this.$auth.isAuthenticated) return true
+      return false
+    },
     transitionName () {
       return this.$store.state.transitionName
     }
-  }
+  },
+  watch: {
+    authenticated (val) {
+      if (val) {
+        this.$auth.getTokenSilently()
+          .then((token) => {
+            this.$store.dispatch('setAuthHeader', token)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+        setInterval(() => {
+          this.$auth.getTokenSilently()
+            .then((token) => {
+              this.$store.dispatch('setAuthHeader', token)
+            })
+            .catch((err) => {
+              console.log(err)
+            })
+        }, 36000)
+      } else {
+        this.$auth.loginWithRedirect()
+      }
+    }
+  },
 }
 </script>
 

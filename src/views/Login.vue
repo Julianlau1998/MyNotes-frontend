@@ -92,7 +92,7 @@ export default {
     },
     methods: {
     login() {
-        this.$auth.loginWithRedirect();
+        this.$auth.loginWithRedirect()
     },
     register() {
         this.$auth.loginWithRedirect({

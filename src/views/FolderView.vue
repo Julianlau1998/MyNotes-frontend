@@ -46,8 +46,6 @@ export default {
     created () {
         this.$store.state.transitionName = 'fade'
     },
-    computed: {
-    },
     methods: {
         settings () {
             this.$router.push('/settings')
