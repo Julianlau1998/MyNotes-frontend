@@ -6,6 +6,9 @@
         <hr class="whiteLine">
         <br>
         <div class="wrapper">
+            <h3>
+                {{ $auth.user.email}}
+            </h3>
             <!-- <hr class="splitLine"> 
             <h3 @click="deleteData()" class="settingWrapper">
                 <img src="../assets/trash.png" alt="trash icon" id="trash">

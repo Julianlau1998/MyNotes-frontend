@@ -285,6 +285,11 @@ body {
     padding-top: 2px;
   }
 
+  .x-button {
+    position: relative;
+    bottom: 0.2rem;
+} 
+
   #login {
         width: 6rem;
         height: 3rem;

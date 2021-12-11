@@ -39,12 +39,21 @@
         <!-- <h3 v-else id="loading">
             Loading...
         </h3> -->
-        <div 
+       <div 
+            v-if="!folderChoice"
+            @click="folderChoice = !folderChoice"
             class="plusButton"
             ref="plusButton"
-            @click="newButton()"
         >
             +
+        </div>
+        <div 
+            v-else
+            @click="folderChoice = !folderChoice"
+            class="plusButton"
+            ref="plusButton"
+        >
+            x
         </div>
         <div 
             id="newFolder"
@@ -153,14 +162,6 @@ export default {
         },
         dragging () {
             this.$store.state.dragging = true
-        },
-        newButton () {
-            if (this.$refs.plusButton.innerHTML === ' + ') {
-                this.$refs.plusButton.innerHTML = 'x'
-            } else {
-                this.$refs.plusButton.innerHTML = ' + '
-            }
-            this.folderChoice = !this.folderChoice
         },
         newFolder () {
             this.newFolderDiv=true 
