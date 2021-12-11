@@ -69,7 +69,7 @@
         <new-folder 
             v-if="newFolderDiv"
             @close="close()"
-            v-on:send="newFolderDiv = !newFolderDiv"
+            @send="newFolderDiv = !newFolderDiv"
             type="Lists" 
         />
     </div>
@@ -90,46 +90,34 @@ export default {
     name: 'Lists',
     // components: {draggable},
     components: {NewFolder},
+    props: {
+        lists: {
+            required: true,
+            type: Array
+        },
+        foldersArray: {
+            required: true,
+            type: Array
+        }
+    },
     data () {
         return {
-            titles: [],
-            lists: [],
             sorting: false,
             folderChoice: false,
             newFolderDiv: false,
         }
     },
     created () {
-        if( axios.defaults.headers.common['authorization'] === undefined) {
-            this.$auth.getTokenSilently()
-            .then((token) => {
-                this.$store.dispatch('setAuthHeader', token)
-                this.$store.dispatch('listsModule/getAll')
-                this.$store.dispatch('foldersModule/getAll')
-            })
-        } else {
-            this.$store.dispatch('listsModule/getAll')
-            this.$store.dispatch('foldersModule/getAll')
-        }
-
         localStorage.setItem('currentComponent', 'Notes')
     },
     computed: {
     ...mapState(['listsModule']),
     ...mapState(['foldersModule']),
-        storedLists () {
-            if (!this.listsModule.lists.loading && this.listsModule.lists.data !== null) {
-                return (!this.listsModule.lists.loading && this.listsModule.lists.data.filter(el => el.folder_id === '' || el.folder_id === '00000000-0000-0000-0000-000000000000')) || []
-            } else {
-                return (!this.listsModule.lists.loading && this.listsModule.lists.data) || []
-            }
-        },
         folders () {
-            if (!this.foldersModule.folders.loading && this.foldersModule.folders.data !== null) {
-                return (!this.foldersModule.folders.loading && this.foldersModule.folders.data.filter(el => el.type ==='Lists')) || []
-            } else {
-                return (!this.foldersModule.folders.loading && this.foldersModule.folders.data) || []
-            }
+            return this.foldersArray.filter(folder => folder.type ==='Lists')
+        },
+        storedLists () {
+            return this.lists
         }
     },
     methods: {
@@ -187,12 +175,7 @@ export default {
     mounted () {
         if(this.storedLists === null) {
             this.storedLists = []
-        } else {
-            for (let i=0; i<this.storedLists.length; i++) {
-            this.titles.push(this.storedLists[i].title)
-            this.lists.push(this.storedLists[i].list)
-        }
-        }
+        } 
         localStorage.setItem('currentComponent', 'Lists')
     }
 }

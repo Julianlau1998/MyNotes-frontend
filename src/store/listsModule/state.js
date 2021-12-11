@@ -9,6 +9,6 @@ export default {
     data: []
   },
   err: null,
-  // localhost: '/api/'
-  localhost: 'https://api.app-mynotes.com/api/',
+  localhost: '/api/'
+  // localhost: 'https://api.app-mynotes.com/api/',
 }

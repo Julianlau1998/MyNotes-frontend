@@ -495,6 +495,7 @@ input[type="checkbox"] {
     position: relative;
     bottom: 0.1rem;
     overflow-wrap: break-word; 
+    font-size: 1.8rem;
 }
 #share {
     width: 5rem;

@@ -48,11 +48,20 @@
             Loading...
         </h3> -->
         <div 
-            @click="newButton()"
+            v-if="!folderChoice"
+            @click="folderChoice = !folderChoice"
             class="plusButton"
             ref="plusButton"
         >
             +
+        </div>
+        <div 
+            v-else
+            @click="folderChoice = !folderChoice"
+            class="plusButton"
+            ref="plusButton"
+        >
+            <span class="x-button"> x </span>
         </div>
         <div 
             class="newFolder"
@@ -104,49 +113,37 @@ export default {
     name: 'Notes',
     // components: {draggable},
     components: {NewFolder},
+    props: {
+        notes: {
+            required: true,
+            type: Array
+        },
+        foldersArray: {
+            required: true,
+            type: Array
+        }
+    },
     data () {
         return {
             titles: [],
-            notes: [],
             sorting: false,
             folderChoice: false,
             newFolderDiv: false,
         }
     },
     created () {
-        if( axios.defaults.headers.common['authorization'] === undefined) {
-            this.$auth.getTokenSilently()
-            .then((token) => {
-                this.$store.dispatch('setAuthHeader', token)
-                this.$store.dispatch('notesModule/getAll')
-                this.$store.dispatch('foldersModule/getAll')
-            })
-        } else {
-            this.$store.dispatch('notesModule/getAll')
-            this.$store.dispatch('foldersModule/getAll')
-        }
-
         localStorage.setItem('currentComponent', 'Notes')
     },
 
     computed: {
     ...mapState(['notesModule']),
     ...mapState(['foldersModule']),
-        storedNotes () {
-            if (!this.notesModule.notes.loading && this.notesModule.notes.data !== null) {
-                console.log(this.notesModule.notes.data)
-                return (!this.notesModule.notes.loading && this.notesModule.notes.data.filter(el => el.folder_id === '' || el.folder_id === '00000000-0000-0000-0000-000000000000')) || []
-            } else {
-                return (!this.notesModule.notes.loading && this.notesModule.notes.data) || []
-            }
-        },
         folders () {
-            if (!this.foldersModule.folders.loading && this.foldersModule.folders.data !== null) {
-                return (!this.foldersModule.folders.loading && this.foldersModule.folders.data.filter(el => el.type === 'Notes')) || []
-            } else {
-                return (!this.foldersModule.folders.loading && this.foldersModule.folders.data) || []
-            }
+            return this.foldersArray.filter(folder => folder.type ==='Notes')
         },
+        storedNotes () {
+            return this.notes
+        }
     },
     methods: {
         openNote (id) {
@@ -183,14 +180,6 @@ export default {
         dragging () {
             this.$store.state.dragging = true
         },
-        newButton () {
-            if (this.$refs.plusButton.innerHTML === ' + ') {
-                this.$refs.plusButton.innerHTML = 'x'
-            } else {
-                this.$refs.plusButton.innerHTML = ' + '
-            }
-            this.folderChoice = !this.folderChoice
-        },
         newFolder () {
             this.newFolderDiv=true 
             this.folderChoice=false
@@ -220,6 +209,11 @@ ul {
 ul li {
     display: inline-block;
 }
+
+.x-button {
+    position: relative;
+    bottom: 0.2rem;
+} 
 
 .noteDiv:active {
     box-shadow: -1px -1px 3px 0px black,

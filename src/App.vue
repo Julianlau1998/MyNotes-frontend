@@ -79,11 +79,11 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
+  overflow-x: hidden;
 }
 body {
   background-color: #0f1820;
   margin-top: 0.5rem;
-  overflow: hidden;
   text-align: center;
 }
     .plusButton {
@@ -231,6 +231,9 @@ body {
     opacity: 0.5;
     padding-top: 0rem;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   #checkboxChecked {
     margin-left: -0.47rem
@@ -277,11 +280,9 @@ body {
   }
 
   .checkImage {
-    width: 1.7rem;
+    width: 1.5rem;
     background-color: transparent;
-    position: relative;
-    bottom: 0.7rem;
-    right: 0.21rem;
+    padding-top: 2px;
   }
 
   #login {

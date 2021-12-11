@@ -48,9 +48,13 @@
         >
             <Lists
                 v-if="currentComponent=='Lists'"
+                :lists="storedLists"
+                :foldersArray="folders"
             />
             <Notes
                 v-else
+                :notes="storedNotes"
+                :foldersArray="folders"
             />
         </transition>
         <br><br><br><br><br><br>
@@ -64,6 +68,8 @@ import Vue from 'vue'
 import Vue2TouchEvents from 'vue2-touch-events'
 import Notes from '../components/Notes.vue'
 import Lists from '../components/Lists.vue'
+import { mapState } from 'vuex' 
+import axios from 'axios'
 
 Vue.use(Vue2TouchEvents)
 
@@ -76,6 +82,37 @@ export default {
     data () {
         return {
             currentComponent: this.$store.state.currentComponent,
+        }
+    },
+    computed: {
+        ...mapState(['notesModule']),
+        ...mapState(['listsModule']),
+        ...mapState(['foldersModule']),
+        storedLists () {
+            if (!this.listsModule.lists.loading && this.listsModule.lists.data !== null) {
+                return (!this.listsModule.lists.loading && this.listsModule.lists.data.filter(el => el.folder_id === '' || el.folder_id === '00000000-0000-0000-0000-000000000000')) || []
+            }
+            return (!this.listsModule.lists.loading && this.listsModule.lists.data) || []
+        },
+        storedNotes () {
+            if (!this.notesModule.notes.loading && this.notesModule.notes.data) {
+                (!this.notesModule.notes.loading && this.notesModule.notes.data.filter(el => el.folder_id === '' || el.folder_id === '00000000-0000-0000-0000-000000000000')) || []
+                return (!this.notesModule.notes.loading && this.notesModule.notes.data.filter(el => el.folder_id === '' || el.folder_id === '00000000-0000-0000-0000-000000000000')) || []
+            }
+            return (!this.notesModule.notes.loading && this.notesModule.notes.data) || []
+        },
+        folders () {
+            if (!this.foldersModule.folders.loading && this.foldersModule.folders.data !== null) {
+                return (!this.foldersModule.folders.loading && this.foldersModule.folders.data) || []
+            } else {
+                return (!this.foldersModule.folders.loading && this.foldersModule.folders.data) || []
+            }
+        },
+        componentTransitionName () {
+            return this.$store.state.componentTransitionName
+        },
+        dragging () {
+            return this.$store.state.dragging
         }
     },
     methods: {
@@ -113,6 +150,20 @@ export default {
         }
     },
     created () {
+        if( axios.defaults.headers.common['authorization'] === undefined) {
+            this.$auth.getTokenSilently()
+            .then((token) => {
+                this.$store.dispatch('setAuthHeader', token)
+                this.$store.dispatch('notesModule/getAll')
+                this.$store.dispatch('listsModule/getAll')
+                this.$store.dispatch('foldersModule/getAll')
+            })
+        } else {
+            this.$store.dispatch('notesModule/getAll')
+            this.$store.dispatch('listsModule/getAll')
+            this.$store.dispatch('foldersModule/getAll')
+        }
+
         if (this.currentComponent === null) {
             this.currentComponent = 'Notes'
         }
@@ -120,22 +171,6 @@ export default {
 
         this.$store.state.transitionName = 'fade'
         document.getElementById('body').style.overflow = 'visible'
-        if(this.storedNotes === null || this.storedNotes === undefined) {
-            this.storedNotes = []
-        } else {
-            for (let i=0; i<this.storedNotes.length; i++) {
-                this.titles.push(this.storedNotes[i].title)
-                this.notes.push(this.storedNotes[i].note)
-            }
-        }
-    },
-    computed: {
-        componentTransitionName () {
-            return this.$store.state.componentTransitionName
-        },
-        dragging () {
-            return this.$store.state.dragging
-        }
     }
 }
 </script>

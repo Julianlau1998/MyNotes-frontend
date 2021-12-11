@@ -85,22 +85,37 @@ export default {
             }
             this.newFolderObject.userID = this.$auth.user.sub
             this.newFolderObject.type = this.type
-            if (this.newFolderObject.color === 'Color') {
-                this.newFolderObject.color = '#7B7D7D'
-            }
+            this.newFolderObject.color = this.getColor(this.newFolderObject.color)
             const payload = {'folder': this.newFolderObject,'userID': this.$auth.user.sub}
             this.$store.dispatch('foldersModule/post', payload)
-            .then(() => {
-                this.save = true
-                this.$emit('send')
-            })
-            .catch ((err) => {
-                console.log(err)
-                this.$emit('send')
-            })
+                .then(() => {
+                    this.$store.dispatch('foldersModule/getAll')  
+                    this.save = true
+                    this.$emit('send')
+                })
+                .catch ((err) => {
+                    console.log(err)
+                    this.$emit('send')
+                })
         },
         close () {
             this.$emit('close')
+        },
+        getColor (color) {
+            switch (color) {
+                case "Red":
+                    return "#C0392B"
+                case "Green":
+                    return "#196F3D"
+                case "Yellow":
+                    return "#9A7D0A"
+                case "Blue":
+                    return "#1F618D"
+                case "Gray":
+                    return "#424949"
+                default:
+                    return '#7B7D7D'
+            }
         }
     }
 }

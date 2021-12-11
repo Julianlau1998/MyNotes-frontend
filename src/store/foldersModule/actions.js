@@ -27,19 +27,23 @@ export function getOne ({ commit, state }, payload) {
     })
 }
 export function post ({ commit, state }, payload) {
-  commit('POST_FOLDER')
-  axios
-    .post(`${state.localhost}folders`, payload.folder, {
-      headers: {
-        'userId': payload.userID
-      }
-    })
-    .then(function () {
-      commit('FOLDER_POSTED', payload.folder)
-    })
-    .catch(function (error) {
-      console.log(error)
-    })
+  return new Promise((resolve, reject) => {
+    commit('POST_FOLDER')
+    axios
+      .post(`${state.localhost}folders`, payload.folder, {
+        headers: {
+          'userId': payload.userID
+        }
+      })
+      .then(function () {
+        commit('FOLDER_POSTED', payload.folder)
+        resolve()
+      })
+      .catch(function (error) {
+        console.log(error)
+        reject()
+      })
+  })
 }
 export function deleteOne ({ commit, state }, payload) {
   commit('DELETE_FOLDER')
