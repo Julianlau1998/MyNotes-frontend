@@ -4,7 +4,8 @@
       "title": "Einstellungen",
       "delete": "Alle App Daten Löschen",
       "home": "Start",
-      "logout": "Ausloggen"
+      "logout": "Ausloggen",
+      "data": "Datenschutzerklärung"
     },
     "home": {
       "notes": "Notizen",

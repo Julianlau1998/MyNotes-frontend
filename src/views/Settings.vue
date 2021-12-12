@@ -35,6 +35,14 @@
 
             <hr class="splitLine">
 
+            <h3 class="settingWrapper">
+                <router-link to="/data-security" id="setting" class="logout data">
+                    {{ $t("text.settings.data") }}
+                </router-link>
+            </h3>
+
+            <hr class="splitLine">
+
             <h3 @click="logout()" class="settingWrapper">
                 <span id="setting" class="logout">{{ $t("text.settings.logout") }}</span>
             </h3>
@@ -94,6 +102,12 @@ export default {
 <style scoped>
     .header {
         font-size: 2.5rem;
+    }
+    .data {
+        color: rgb(201, 201, 201);
+    }
+    .data:hover {
+        text-decoration:none;
     }
     .splitLine{
       border-top: 3px solid rgb(134, 134, 134);

@@ -9,6 +9,7 @@ import Settings from '../views/Settings.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import Folder from '../views/FolderView.vue'
+import DataSecurity from '../views/DataSecurity.vue'
 import { authGuard } from "../auth/authGuard";
 
 
@@ -66,6 +67,12 @@ const routes = [
     path: '/folder/:id',
     name: 'Folder',
     component: Folder,
+    beforeEnter: authGuard
+  },
+  {
+    path: '/data-security',
+    name: 'DataSecurity',
+    component: DataSecurity,
     beforeEnter: authGuard
   }
 ]

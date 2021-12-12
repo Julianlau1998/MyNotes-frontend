@@ -4,7 +4,8 @@
       "title": "Settings",
       "delete": "Delete App Data",
       "home": "Home",
-      "logout": "Log Out"
+      "logout": "Log Out",
+      "data": "Data Security"
     },
     "home": {
       "notes": "Notes",
