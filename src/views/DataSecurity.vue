@@ -81,6 +81,9 @@ export default {
             margin: 3rem 10rem 0 10rem;
         }
     }
+    body {
+        overflow-y: visible !important;
+    }
     .data {
         color: white;
     }
