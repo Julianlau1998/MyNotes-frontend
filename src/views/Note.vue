@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div>
-            <router-link to="/">
+            <router-link :to="storedNote.folder_id !== '00000000-0000-0000-0000-000000000000' && !this.notesModule.note.loading ? `/folder/${storedNote.folder_id}` : '/' ">
                     <img
                     src="../assets/arrow.png"
                     alt="back arrow"
@@ -119,7 +119,11 @@ export default {
             this.$store.dispatch('notesModule/put', payload)
             .then (() => {
                 this.save = true
-                router.push('/')
+                if (this.storedNote.folder_id !== '00000000-0000-0000-0000-000000000000' && !this.notesModule.note.loading) {
+                    router.push(`/folder/${this.storedNote.folder_id}`)    
+                } else {
+                    router.push('/')
+                }
             })
             .catch((err) => {
                 console.log(err)

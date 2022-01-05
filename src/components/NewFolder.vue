@@ -9,7 +9,7 @@
             class="newFolderDiv"
         >
             <h2>
-                New Folder
+                {{ $t("text.home.new_folder") }}
             </h2>
             <hr class="whiteLine">
             <br>
@@ -18,7 +18,7 @@
                     <ValidationProvider name="name" rules="required" v-slot="{ errors }">
                         <input
                             type="text" 
-                            placeholder="Folder Name"
+                            :placeholder="$t('text.home.new_folder')"
                             class="neomorph"
                             id="folderInput"
                             v-model="newFolderObject.title"

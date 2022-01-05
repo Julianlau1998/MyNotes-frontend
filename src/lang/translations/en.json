@@ -9,7 +9,10 @@
     },
     "home": {
       "notes": "Notes",
-      "lists": "Lists"
+      "lists": "Lists",
+      "new_note": "New Note",
+      "new_list": "New List",
+      "new_folder": "New Folder"
     },
     "note":{
       "title": "Title",

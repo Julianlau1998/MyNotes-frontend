@@ -22,7 +22,11 @@ export function POST_FOLDER (state) {
   state.err = null
 }
 export function FOLDER_POSTED (state, folder) {
-  state.folders.data.unshift(folder)
+  if (state.folders.data) {
+    state.folders.data.unshift(folder)
+  } else {
+    state.folders.data = [folder]
+  }
   state.folder.submitting = false
 }
 export function DELETE_FOLDER (state) {

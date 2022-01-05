@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-        <router-link to="/">
+        <router-link :to="storedList.folder_id !== '00000000-0000-0000-0000-000000000000' && !this.storedList.loading ? `/folder/${storedList.folder_id}` : '/' ">
             <img
                 src="../assets/arrow.png"
                 alt="back arrow"
@@ -259,7 +259,12 @@ export default {
                 this.$store.dispatch('listsModule/put', payload)
                 .then (() => {
                     this.save = true
-                    this.$router.push('/')
+                    if (this.storedList.folder_id !== '00000000-0000-0000-0000-000000000000' && !this.listsModule.list.loading) {
+                        console.log(this.storedList)
+                        this.$router.push(`/folder/${this.storedList.folder_id}`)    
+                    } else {
+                        this.$router.push('/')
+                    }
                 })
                 .catch((err) => {
                     console.log(err)

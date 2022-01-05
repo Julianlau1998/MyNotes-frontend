@@ -75,7 +75,7 @@
                 id="newFolder"
                 @click="newFolder()"
             >
-                New Folder
+                {{ $t("text.home.new_folder") }}
             </a>
         </div>
         <div
@@ -86,7 +86,7 @@
                 id="newNote"
                 @click="newNote()"
             >
-                New Note
+                {{ $t("text.home.new_note") }}
             </a>
         </div>
         <transition

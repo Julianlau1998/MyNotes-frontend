@@ -64,7 +64,7 @@
             <a
                 @click="newFolder()"
             >
-                New Folder
+                {{ $t("text.home.new_folder") }}
             </a>
         </div>
         <div
@@ -74,7 +74,7 @@
             <a
                 @click="newList()"
             >
-                New List
+                {{ $t("text.home.new_list") }}
             </a>
         </div>
         <new-folder 

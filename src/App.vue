@@ -314,9 +314,9 @@ body {
 
   #newFolder,
   #newNote {
-    width: 9.5rem;
+    min-width: 9.5rem;
     height: 3.5rem;
-    padding: 0.6rem 0 0rem 0;
+    padding: 0.6rem 0.5rem 0rem 0.5rem;
     background-color: aliceblue;
     position: fixed;
     bottom: 7.3rem;

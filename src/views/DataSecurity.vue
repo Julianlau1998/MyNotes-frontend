@@ -71,7 +71,9 @@
 
 <script>
 export default {
-
+    created () {
+        document.getElementById('body').style.overflow = 'visible'
+    }
 }
 </script>
 

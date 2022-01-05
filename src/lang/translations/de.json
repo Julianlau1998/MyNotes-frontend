@@ -9,7 +9,10 @@
     },
     "home": {
       "notes": "Notizen",
-      "lists": "Listen"
+      "lists": "Listen",
+      "new_note": "Neue Notiz",
+      "new_list": "Neue Liste",
+      "new_folder": "Neuer Ordner"
     },
     "note":{
       "title": "Titel",
@@ -25,6 +28,7 @@
     },
     "saveAlert": "Bist Du sicher, dass du fortfahren möchtest ohne zu Speichern?",
     "deleteAlert": "Bist Du sicher, dass Du alle Daten löschen möchtest? Diese lassen sich nicht wiederherstellen.",
+    "deleteFolderAlert": "Sind Sie sicher, dass Sie diesen Ordner löschen möchten? Alle enthalten Dateien werden hierdurch gelöscht.",
     "cancel": "Abbrechen",
     "continue": "Weiter"
   }
