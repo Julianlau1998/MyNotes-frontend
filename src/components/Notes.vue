@@ -20,7 +20,9 @@
                             v-bind:style="{backgroundColor: folder.color}"
                             @click="openFolder(folder.id)"
                         >
-                            <h5><b>{{folder.title.substring(0,11)}}</b></h5>
+                            <h5><b>
+                                {{ folder.title.split(' ')[0].length > 0 ? folder.title.split(' ')[0].substring(0,8) : folder.title.substring(0,8)}}
+                            </b></h5>
                         </button>
                     </span>
                     <hr id="redLine">
@@ -38,7 +40,7 @@
                             @click="openNote(note.id)"
                         >
                             <h5><b>
-                                {{ note.title.split(' ')[0].length > 0 ? note.title.split(' ')[0].substring(0,11) : note.title.substring(0,11)}}
+                                {{ note.title.split(' ')[0].length > 0 ? note.title.split(' ')[0].substring(0,8) : note.title.substring(0,8)}}
                             </b></h5>
                         </button>
                     </span>
