@@ -1,12 +1,13 @@
 <template>
     <transition
+      v-if="!iOS"
       :name= transitionName 
       mode="out-in"
       ref="transition"
     >
-        <router-view
-        ></router-view>
+        <router-view />
     </transition>
+    <router-view v-else />
 </template>
 
 <script>
@@ -14,7 +15,18 @@ import axios from 'axios'
 export default {
   data () {
     return {
+      iOS: true
     }
+  },
+  created () {
+    this.iOS = [
+      'iPad Simulator',
+      'iPhone Simulator',
+      'iPod Simulator',
+      'iPad',
+      'iPhone',
+      'iPod'
+    ].includes(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
   },
   mounted() {
     if (this.$workbox) {
