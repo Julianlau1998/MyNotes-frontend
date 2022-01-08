@@ -5,6 +5,7 @@ export const authGuard = (to, from, next) => {
 
   const fn = () => {
     // If the user is authenticated, continue with the route
+    if (!window.navigator.onLine) return next()
     if (authService.isAuthenticated) {
       return next();
     }

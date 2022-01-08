@@ -48,6 +48,7 @@ export default {
   computed: {
     authenticated () {
       if (this.$auth.isAuthenticated) return true
+      if (!window.navigator.onLine) return true
       return false
     },
     transitionName () {
@@ -56,7 +57,7 @@ export default {
   },
   watch: {
     authenticated (val) {
-      if (val) {
+      if (val  && window.navigator.onLine) {
         this.$auth.getTokenSilently()
           .then((token) => {
             this.$store.dispatch('setAuthHeader', token)
@@ -73,7 +74,7 @@ export default {
               console.log(err)
             })
         }, 36000)
-      } else {
+      } else if (window.navigator.onLine) {
           this.$auth.loginWithRedirect()
       }
     }
@@ -369,8 +370,8 @@ body {
 }
 .noteDiv {
     overflow-wrap: break-word; 
-    width: 9rem;
-    height: 8rem;
+    width: 8rem;
+    height: 7rem;
     border-radius: 1rem;
     background-color: transparent;
     border: none;
