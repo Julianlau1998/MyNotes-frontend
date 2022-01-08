@@ -15,7 +15,7 @@
             <br>
             <ValidationObserver v-slot="{ invalid }">
                 <form @submit.prevent="onSubmit">
-                    <ValidationProvider name="name" rules="required" v-slot="{ errors }">
+                    <ValidationProvider name="name" rules="required">
                         <input
                             type="text" 
                             :placeholder="$t('text.home.new_folder')"
@@ -26,7 +26,6 @@
                             autofocus
                         >
                         <br>
-                        <span class="errorMessage">{{ errors[0] }}</span>
                     </ValidationProvider>
                     <br>
                     <select 

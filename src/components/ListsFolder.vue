@@ -8,20 +8,16 @@
         <ul
             id="listParent"
         >
-            <li
-                v-for="(list, idx) in lists"
-                v-bind:key="idx"            >
-                <span>
-                    <button
-                        class="noteDiv" 
-                        v-bind:style="{backgroundColor: folder.color}"
-                        @click="openList(list.id)"
-                    >
-                        <h5><b>{{list.title.substring(0,11)}}</b></h5>
-                    </button>
-                </span>
-                <hr id="redLine">
-            </li>
+            <div class="flex">
+                <MiniElement
+                    :element="list"
+                    :isFolder="true"
+                    :folderColor="folder.color"
+                    v-for="(list, listsIndex) in lists"
+                    v-bind:key="list.id + listsIndex"
+                    @open="openList($event)"
+                />
+            </div>
         </ul>
         <div 
             @click="newList()"
@@ -35,10 +31,14 @@
 
 <script>
 import { mapState } from 'vuex' 
+import MiniElement from './MiniElement'
 import axios from 'axios'
 
 export default {
     name: 'ListsFolder',
+    components: {
+        MiniElement
+    },
     data () {
         return {
             id: this.$route.params.id

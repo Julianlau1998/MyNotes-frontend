@@ -10,32 +10,23 @@
                 @start="dragging()"
                 @end="save()"
             > -->
-                <li
+            <div class="flex">
+                <MiniElement
+                    :element="folder"
+                    :isFolder="true"
                     v-for="(folder, folderIndex) in folders"
-                    v-bind:key="folder.id + folderIndex"
-                >
-                    <span v-touch:touchhold="touchHoldHandler">
-                        <button
-                            class="noteDiv" 
-                            v-bind:style="{backgroundColor: folder.color}"
-                            @click="openFolder(folder.id)"
-                        >
-                            <h5><b>
-                                {{ folder.title.split(' ')[0].length > 0 ? folder.title.split(' ')[0].substring(0,8) : folder.title.substring(0,8)}}
-                            </b></h5>
-                        </button>
-                    </span>
-                    <hr id="redLine">
-                </li>
-                <li v-for="(list, listsIndex) in storedLists" v-bind:key="list.id + listsIndex">
-                    <button
-                        class="noteDiv"
-                        @click="openList(list.id)"
-                    >
-                        <h5><b>{{list.title.substring(0,8)}}</b></h5>
-                    </button>
-                    <hr id="redLine">
-                </li>
+                    :key="folder.id + folderIndex"
+                    @open="openFolder($event)"
+                />
+            </div>
+                <div class="flex">
+                    <MiniElement
+                        :element="list"
+                        v-for="(list, listsIndex) in storedLists"
+                        v-bind:key="list.id + listsIndex"
+                        @open="openList($event)"
+                    />
+                </div>
             <!-- </draggable> -->
         </ul>
         <!-- <h3 v-else id="loading">
@@ -93,6 +84,7 @@ import Vue from 'vue'
 import Vue2TouchEvents from 'vue2-touch-events'
 import { mapState } from 'vuex' 
 import NewFolder from './NewFolder.vue'
+import MiniElement from './MiniElement.vue'
 import axios from 'axios'
 
 Vue.use(Vue2TouchEvents)
@@ -100,7 +92,10 @@ Vue.use(Vue2TouchEvents)
 export default {
     name: 'Lists',
     // components: {draggable},
-    components: {NewFolder},
+    components: {
+        NewFolder,
+        MiniElement
+    },
     props: {
         lists: {
             required: true,

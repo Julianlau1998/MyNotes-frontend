@@ -10,42 +10,24 @@
                 @start="dragging()"
                 @end="save()"
             > -->
-                <li
-                    v-for="(folder, index) in folders"
-                    v-bind:key="folder.id + index"
-                >
-                    <span v-touch:touchhold="touchHoldHandler">
-                        <button
-                            class="noteDiv" 
-                            v-bind:style="{backgroundColor: folder.color}"
-                            @click="openFolder(folder.id)"
-                        >
-                            <h5><b>
-                                {{ folder.title.split(' ')[0].length > 0 ? folder.title.split(' ')[0].substring(0,8) : folder.title.substring(0,8)}}
-                            </b></h5>
-                        </button>
-                    </span>
-                    <hr id="redLine">
-                </li>
-                <li
+            <div class="flex">
+                <MiniElement
+                    :element="folder"
+                    :isFolder="true"
+                    v-for="(folder, idx) in folders"
+                    v-bind:key="folder.id + idx"
+                    @open="openFolder($event)"
+                />
+            </div>
+            <div class="flex">
+                <MiniElement
+                    :element="note"
                     v-for="(note, idx) in storedNotes"
                     v-bind:key="note.id + idx"
-                >
-                    <span
-                        v-touch:touchhold="touchHoldHandler"
-                        v-if="note.folder_id === '' || note.folder_id == '00000000-0000-0000-0000-000000000000'"
-                    >
-                        <button
-                            class="noteDiv"
-                            @click="openNote(note.id)"
-                        >
-                            <h5><b>
-                                {{ note.title.split(' ')[0].length > 0 ? note.title.split(' ')[0].substring(0,8) : note.title.substring(0,8)}}
-                            </b></h5>
-                        </button>
-                    </span>
-                    <hr id="redLine">
-                </li>
+                    v-touch:touchhold="touchHoldHandler"
+                    @open="openNote($event)"
+                />
+                </div>
             <!-- </draggable> -->
         </ul>
         <!-- <h3 v-else id="loading">
@@ -109,6 +91,7 @@ import Vue from 'vue'
 import Vue2TouchEvents from 'vue2-touch-events'
 import { mapState } from 'vuex' 
 import NewFolder from './NewFolder.vue'
+import MiniElement from './MiniElement.vue'
 import axios from 'axios'
 
 Vue.use(Vue2TouchEvents)
@@ -116,7 +99,10 @@ Vue.use(Vue2TouchEvents)
 export default {
     name: 'Notes',
     // components: {draggable},
-    components: {NewFolder},
+    components: {
+        NewFolder,
+        MiniElement
+    },
     props: {
         notes: {
             required: true,

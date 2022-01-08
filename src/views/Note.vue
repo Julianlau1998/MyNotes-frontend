@@ -11,15 +11,14 @@
             </router-link>
         </div>
         <div>
-            <router-link to="/" v-if="!focusValue">
-                    <img
-                    src="../assets/trash.png"
-                    alt="delete icon"
-                    class="delete"
-                    @click="deleteNote"
-                    ref="trashcan"
-                    >
-            </router-link>
+            <img
+                v-if="!focusValue"
+                src="../assets/trash.png"
+                alt="delete icon"
+                class="delete"
+                @click="deleteNote"
+                ref="trashcan"
+            >
         </div>
         <br><br>
         <ValidationObserver v-slot="{ handleSubmit }">
@@ -131,8 +130,15 @@ export default {
         },
 
         deleteNote () {
-            const payload = {'id': this.id }
-            this.$store.dispatch('notesModule/deleteOne', payload)
+            const vm = this
+            this.$dialog.confirm(this.$t('text.deleteAlert'))
+                .then (function () {
+                    const payload = {'id': vm.id }
+                    vm.$store.dispatch('notesModule/deleteOne', payload)
+                    vm.$router.push('/')
+                })
+                .catch (function () {
+                })
         },
 
         share () {

@@ -8,20 +8,16 @@
         <ul
             id="listParent"
         >
-            <li
-                v-for="(note, idx) in notes"
-                v-bind:key="idx"            >
-                <span>
-                    <button
-                        class="noteDiv" 
-                        v-bind:style="{backgroundColor: folder.color}"
-                        @click="openNote(note.id)"
-                    >
-                        <h5><b>{{note.title.substring(0,11)}}</b></h5>
-                    </button>
-                </span>
-                <hr id="redLine">
-            </li>
+            <div class="flex">
+                <MiniElement
+                    :element="note"
+                    :isFolder="true"
+                    :folderColor="folder.color"
+                    v-for="(note, listsIndex) in notes"
+                    v-bind:key="note.id + listsIndex"
+                    @open="openNote($event)"
+                />
+            </div>
         </ul>
         <div 
             @click="newNote()"
@@ -36,9 +32,13 @@
 <script>
 import { mapState } from 'vuex' 
 import axios from 'axios'
+import MiniElement from './MiniElement'
 
 export default {
     name: 'NotesFolder',
+    components: {
+        MiniElement
+    },
     data () {
         return {
             id: this.$route.params.id

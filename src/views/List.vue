@@ -8,16 +8,14 @@
                 ref="backArrow"
             >
         </router-link>
-
-        <router-link to="/" v-if="!focusValue">
-            <img
-                src="../assets/trash.png"
-                alt="delete icon"
-                class="delete"
-                @click="deleteList"
-                ref="trashcan"
-            >
-        </router-link>
+        <img
+            v-if="!focusValue"
+            src="../assets/trash.png"
+            alt="delete icon"
+            class="delete"
+            @click="deleteList"
+            ref="trashcan"
+        >
         <br><br>
         <ValidationObserver v-slot="{ handleSubmit }">
         <form @submit.prevent="handleSubmit(onSubmit)" class="form">
@@ -290,9 +288,15 @@ export default {
             this.focusValue=true
         },
         deleteList () {
-            const payload = {'id': this.id}
-            this.$store.dispatch('listsModule/deleteOne', payload)
-            this.$router.push('/')
+            const vm = this
+            this.$dialog.confirm(this.$t('text.deleteAlert'))
+                .then (function () {
+                    const payload = {'id': vm.id}
+                    vm.$store.dispatch('listsModule/deleteOne', payload)
+                    vm.$router.push('/')
+                })
+                .catch (function () {
+                })
         },
         edit(item) {
             if (this.$refs.add.value === '') {

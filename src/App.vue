@@ -74,7 +74,7 @@ export default {
             })
         }, 36000)
       } else {
-        this.$auth.loginWithRedirect()
+          this.$auth.loginWithRedirect()
       }
     }
   },
@@ -98,6 +98,11 @@ body {
   margin-top: 0.5rem;
   text-align: center;
 }
+.flex {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
     .plusButton {
         position: fixed;
         bottom: 1rem;
@@ -107,7 +112,7 @@ body {
         width: 4.9rem;
         height: 4.9rem;
         font-size: 3.2em;
-        background-color: transparent;
+        background-color: #0f1820;
         border-radius: 100%;
         border: none;
         box-shadow: -1px -1px 4px 0px rgb(133, 133, 133),
@@ -149,8 +154,9 @@ body {
     .delete {
         width: 2.2rem;
         position: absolute;
-        right: 1rem;
+        right: 0.8rem;
         top: 0.2rem;
+        cursor: pointer;
     }
     #title {
         font-size: 1.5rem;
