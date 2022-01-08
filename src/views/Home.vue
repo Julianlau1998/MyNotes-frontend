@@ -150,7 +150,7 @@ export default {
         }
     },
     created () {
-        if( axios.defaults.headers.common['authorization'] === undefined) {
+        if( axios.defaults.headers.common['authorization'] === undefined && window.navigator.onLine) {
             this.$auth.getTokenSilently()
             .then((token) => {
                 this.$store.dispatch('setAuthHeader', token)
