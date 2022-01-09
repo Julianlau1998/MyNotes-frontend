@@ -146,6 +146,8 @@ export default {
         margin-top: -5rem;
         outline: none;
         padding-left: 0.5rem;
+        border: 1px solid rgb(125, 125, 125);
+        border-radius: 10px;
     }
     #colorSelect {
         margin-top: 0.5rem;
