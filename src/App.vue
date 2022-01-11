@@ -104,6 +104,19 @@ body {
   flex-flow: row wrap;
   justify-content: center;
 }
+.flex_start {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+}
+.is-bottom {
+  position: absolute;
+  bottom: 1rem;
+  width: 100%;
+}
+.pt-3 {
+  padding-top: 0.5rem !important;
+}
     .plusButton {
         position: fixed;
         bottom: 1rem;
