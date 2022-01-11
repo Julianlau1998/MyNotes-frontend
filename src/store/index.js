@@ -17,6 +17,7 @@ export default new Vuex.Store({
     currentComponent: localStorage.getItem('currentComponent'),
     currentFolder: '',
     dragging: false,
+    iOS: false,
     localhost: 'https://api.app-mynotes.com/api/',
     //localhost: '/api/',
     folder: ''

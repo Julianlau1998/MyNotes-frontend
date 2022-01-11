@@ -129,7 +129,7 @@
             id="share"
             ref="share"
         >
-        <div class="is-bottom">
+        <div :class="!iOS ? 'is-bottom' : 'is-bottom-ios'">
             <div class="flex_start">
                 <input
                     class="form-control newNote"
@@ -225,6 +225,9 @@ export default {
         ...mapState(['listsModule']),
         storedList () {
             return (!this.listsModule.list.loading && this.listsModule.list.data) || []
+        },
+        iOS () {
+            return this.$store.state.iOS
         }
     },
 

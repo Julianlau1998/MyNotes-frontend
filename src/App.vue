@@ -27,6 +27,7 @@ export default {
       'iPhone',
       'iPod'
     ].includes(navigator.platform) || (navigator.userAgent.includes("Mac") && "ontouchend" in document)
+    this.$store.state.iOS = this.iOS
   },
   mounted() {
     if (this.$workbox) {
@@ -112,6 +113,11 @@ body {
 .is-bottom {
   position: absolute;
   bottom: 1rem;
+  width: 100%;
+}
+.is-bottom-ios {
+  position: absolute;
+  bottom: 2rem;
   width: 100%;
 }
 .pt-3 {

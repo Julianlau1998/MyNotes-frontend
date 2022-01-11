@@ -114,21 +114,25 @@
             </div>
         </form>
         </ValidationObserver>
-        <input
-            class="form-control newNote"
-            :placeholder="$t('text.list.newItem')"
-            v-model="listItem"
-            ref="add"
-            v-on:keyup.enter="addItem()"
-        />
-        <button
-            class="neomorph"
-            id="addButton"
-            @click="addItem"
-            ref="addButton"
-        > 
-            {{ $t('text.list.add') }}
-        </button>
+         <div :class="!iOS ? 'is-bottom' : 'is-bottom-ios'">
+            <div class="flex_start">
+                <input
+                    class="form-control newNote"
+                    :placeholder="$t('text.list.newItem')"
+                    v-model="listItem"
+                    ref="add"
+                    v-on:keyup.enter="addItem()"
+                />
+                <button
+                    class="neomorph"
+                    id="addButton"
+                    @click="addItem"
+                    ref="addButton"
+                > 
+                    {{ $t('text.list.add') }}
+                </button>
+            </div>
+         </div>
     </div>
 </template>
 
@@ -304,10 +308,11 @@ export default {
       width: 2rem;
   }
   .newNote{
-      width: 75%;
-      margin-left: 3%;
-      position: absolute;
       bottom: 1rem;
+      flex-grow: 1;
+      flex-basis: 50%;
+      margin-left: 0.5rem;
+      margin-right: 0.2rem;
       font-size: 1.5rem;
       background-color: rgb(23, 25, 27);
       background-color: rgb(54, 61, 68);
@@ -315,12 +320,13 @@ export default {
       border: none;
   }
   #addButton {
-      position: absolute;
-      bottom: 1.2rem;
-      right: 1rem;
+      flex-grow: 1;
+      flex-basis: 16%;
+      max-width: 5rem;
+      margin: 0.35rem;
+      padding: 0rem 0.5rem 0 0.5rem;
       height: 2.5rem;
       border-radius: 5px;
-      background-color: transparent;
       border: none;
       box-shadow: -1px -1px 4px 0px rgb(133, 133, 133),
                     1px 1px 5px 2px black;
@@ -370,25 +376,4 @@ input[type="checkbox"] {
     color: rgb(0, 215, 215);
     font-weight: 500;
 }
-@media (min-width: 600px) { 
-  .newNote {
-      width: 83%;
-  }   
- }
- @media (min-width: 800px) { 
-  .newNote {
-      width: 85%;
-  }   
-  #addButton {
-      margin-right: 0.8rem;
-  }
- }
- @media (min-width: 1300px) { 
-  .newNote {
-      width: 88%;
-  }
-  #addButton {
-      margin-right: 1rem;
-  }
- }
 </style>
